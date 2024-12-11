@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <form action="/" method="post" enctype="multipart/form-data">
+            <div style="width: 100%;">
+                <table style="width: 100%;">
+                    <tr style="width: 100%;">
+                        <td style="width: 30%;">
+                            {% if content %}
+                                <div id="contentBox" style="background-image: url({{content}});">
+
+                                </div>
+                            {% else %}
+                                <div id="contentBox">
+
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td style="width: 10%;">
+                            <label for="content" class="custom-file-upload">Content</label>
+                            <input type="file" accept="image/*" name="content" id="content" onchange="loadContentFile(event)" style="display: none;">
+                        </td>
+                        <td style="width: 60%;">
+                            <center>
+                                {% if content_weight %}
+                                    <input type="range" min="100" max="100000" value="{{content_weight}}" class="slider" id="contentSlider" name="contentSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>{{content_weight}}</output>
+                                {% else %}
+                                    <input type="range" min="100" max="100000" value="100" class="slider" id="contentSlider" name="contentSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>100</output>
+                                {% endif %}
+                                <br>
+                                <label for="contentSlider">Content Weight</label>
+                                <br>
+                                <br>
+                                {% if style_weight %}
+                                    <input type="range" min="100000" max="100000000" value="{{style_weight}}" class="slider" id="styleSlider" name="styleSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>{{style_weight}}</output>
+                                {% else %}
+                                    <input type="range" min="100000" max="100000000" value="100000000" class="slider" id="styleSlider" name="styleSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>100000000</output>
+                                {% endif %}
+                                <br>
+                                <label for="styleSlider">Style Weight</label>
+                            </center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if content %}
+                                <div id="styleBox" style="background-image: url({{style}});">
+
+                                </div>
+                            {% else %}
+                                <div id="styleBox">
+
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <label for="style" class="custom-file-upload">Style</label>
+                            <input type="file" accept="image/*" name="style" id="style" onchange="loadStyleFile(event)" style="display: none;">
+                        </td>
+                        <td>
+                            <center>
+                                {% if learning_rate %}
+                                    <input type="range" min="1" max="100" value="{{learning_rate}}" class="slider" id="learningRateSlider" name="learningRateSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>{{learning_rate}}</output>
+                                {% else %}
+                                    <input type="range" min="1" max="100" value="50" class="slider" id="learningRateSlider" name="learningRateSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>50</output>
+                                {% endif %}
+                                <br>
+                                <label for="learningRateSlider">Learning Speed</label>
+                                <br>
+                                <br>
+                                {% if samples %}
+                                    <input type="range" min="1" max="10" value="{{samples}}" class="slider" id="examplesSlider" name="examplesSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>{{samples}}</output>
+                                {% else %}
+                                    <input type="range" min="1" max="10" value="3" class="slider" id="examplesSlider" name="examplesSlider" oninput="this.nextElementSibling.value = this.value">
+                                    <output>3</output>
+                                {% endif %}
+                                <br>
+                                <label for="examplesSlider">Number of Samples</label>
+                                <p>More Samples, More Improved, More Time</p>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <center>
+                <input type="submit" value="Submit" style="width: 200px; height: 50px; font-size: large; font-weight: bold;">
+            </center>
+        </form>
+        <div class="image-grid">
+            {% for image in images %}
+                <a href="{{ image }}" download="{{ image }}"><img src="{{ image }}" alt="Image"></a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f0f0f0;
+    }
+
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+    .container { 
+        width: 100%;
+        height: 100%;
+    }
+    form {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    tr {
+        padding: 50px;
+    }
+    td {
+        padding: 50px;
+    }
+    input {
+        padding: 5px 20px;
+    }
+    output {
+        padding: 5px;
+        font-size: medium;
+        font-weight: bold;
+        color:chocolate;
+    }
+    label, p {
+        font-size: large;
+        font-family : monospace;
+    }
+    #contentBox {
+        height: 224px;
+        width: 224px;
+        background-color:#d3d3d3;
+        background-size: cover;
+    }
+    #styleBox {
+        height: 224px;
+        width: 224px;
+        background-color:#d3d3d3;
+        background-size: cover;
+    }
+    /* The slider itself */
+    .slider {
+        -webkit-appearance: none;  /* Override default CSS styles */
+        appearance: none;
+        width: 100%; /* Full-width */
+        height: 25px; /* Specified height */
+        background: #d3d3d3; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+        opacity: 1; /* Fully shown on mouse-over */
+    }
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 224px);
+        grid-template-rows: repeat(2, 224px);
+        grid-gap: 16px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+        margin-bottom: 50px;
+    }
+
+    .image-grid img {
+        width: 224px;
+        height: 224px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script>
+    var contentBox = document.getElementById("contentBox")
+    var styleBox = document.getElementById("styleBox")
+    
+    var loadContentFile = (event) => {
+        contentBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")"
+    }
+    var loadStyleFile = (event) => {
+        styleBox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")"
+    }
+    
+</script>
+
+</html>

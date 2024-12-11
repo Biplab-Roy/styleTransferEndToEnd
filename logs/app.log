@@ -1,0 +1,4 @@
+2024-12-11 23:17:29,845 - app - INFO - Home page accessed
+2024-12-11 23:17:29,858 - app - INFO - New session started 0748660a-e79c-4696-a634-a6dc316948c3
+2024-12-11 23:17:29,930 - app - INFO - Running Model 0748660a-e79c-4696-a634-a6dc316948c3
+2024-12-11 23:17:47,044 - app - INFO - Finised Model Run 0748660a-e79c-4696-a634-a6dc316948c3
